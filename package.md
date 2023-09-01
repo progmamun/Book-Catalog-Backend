@@ -26,4 +26,5 @@
 - yarn add prisma typescript ts-node @types/node --dev
 - npx tsc --init
 - npx prisma
+- yarn add @prisma/client
 - npx prisma migrate dev
