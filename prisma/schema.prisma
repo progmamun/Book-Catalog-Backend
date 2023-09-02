@@ -9,3 +9,94 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id               String            @id @default(uuid())
+  fullName         String            @map("full_name")
+  email            String            @unique
+  password         String
+  role             String
+  contactNo        String            @unique @map("contact_number")
+  address          String
+  profileImg       String            @map("profile_img")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  reviewAndRatings ReviewAndRating[]
+  orders           Order[]
+
+  @@map("users")
+}
+
+model Category {
+  id    String @id @default(uuid())
+  title String
+  books Book[]
+
+  @@map("categories")
+}
+
+model Book {
+  id              String @id @default(uuid())
+  title           String
+  author          String
+  price           Float
+  genre           String
+  publicationDate String @map("publication_date")
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  reviewAndRatings ReviewAndRating[]
+  orderedBooks     OrderedBook[]
+
+  @@map("books")
+}
+
+model ReviewAndRating {
+  id     String @id @default(uuid())
+  review String
+  rating Int
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id])
+
+  @@map("reviews_and_ratings")
+}
+
+// model Order {
+//   id String @id @default(uuid())
+
+//   userId String
+//   user   User   @relation(fields: [userId], references: [id])
+
+//   orderedBooks Json[]   @map("ordered_books")
+//   status       String   @default("pending")
+//   createdAt    DateTime @default(now()) @map("created_at")
+
+//   @@map("orders")
+// }
+model Order {
+  id           String        @id @default(uuid())
+  userId       String
+  status       String        @default("pending")
+  createdAt    DateTime      @default(now())
+  user         User          @relation(fields: [userId], references: [id])
+  orderedBooks OrderedBook[]
+
+  @@map("orders")
+}
+
+model OrderedBook {
+  id       String @id @default(uuid())
+  quantity Int
+  orderId  String
+  order    Order  @relation(fields: [orderId], references: [id])
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id])
+
+  @@map("ordered_books")
+}
