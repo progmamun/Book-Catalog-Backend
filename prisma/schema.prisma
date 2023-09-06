@@ -18,7 +18,7 @@ model User {
   role             String
   contactNo        String            @unique @map("contact_number")
   address          String
-  profileImg       String            @map("profile_img")
+  profileImg       String?           @map("profile_img")
   createdAt        DateTime          @default(now()) @map("created_at")
   updatedAt        DateTime          @updatedAt @map("updated_at")
   reviewAndRatings ReviewAndRating[]
