@@ -13,3 +13,7 @@
 **Get All Users → Only Allowed For Admin**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/users (GET)
+
+**Get a Single User → Only Allowed For Admin**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/users/:id (GET)

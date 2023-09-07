@@ -16,6 +16,25 @@ const getAllUser = async () => {
   return users;
 };
 
+const getSingleUser = async (userId: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      contactNo: true,
+      address: true,
+      profileImg: true,
+    },
+  });
+  return user;
+};
+
 export const UserService = {
   getAllUser,
+  getSingleUser,
 };
