@@ -43,3 +43,7 @@
 **Update a Category → Only Allowed For Admin**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/categories/:id (PATCH)
+
+**Delete a Category → Only Allowed For Admin**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/categories/:id ( DELETE)
