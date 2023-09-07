@@ -39,3 +39,7 @@
 **Get a Single Category**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/categories/:id (GET)
+
+**Update a Category → Only Allowed For Admin**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/categories/:id (PATCH)
