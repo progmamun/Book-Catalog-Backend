@@ -69,3 +69,7 @@
 **Update a Single Book → Only Allowed For Admin**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/books/:id (PATCH)
+
+**Delete a book → Only Allowed for admins**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/books/:id ( DELETE)

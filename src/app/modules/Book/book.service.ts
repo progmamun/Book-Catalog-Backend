@@ -194,10 +194,26 @@ const updateBookById = async (
   return result;
 };
 
+const deleteBookById = async (id: string): Promise<Book | null> => {
+  const isExist = await getSingleBook(id);
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Book not found !");
+  }
+
+  const result = await prisma.book.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const BookService = {
   createBook,
   getAllBook,
   getBooksByCategory,
   getSingleBook,
   updateBookById,
+  deleteBookById,
 };
