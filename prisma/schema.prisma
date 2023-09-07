@@ -15,7 +15,7 @@ model User {
   name             String
   email            String            @unique
   password         String
-  role             String
+  role             Role?             @default(customer)
   contactNo        String            @unique
   address          String
   profileImg       String?
@@ -28,9 +28,11 @@ model User {
 }
 
 model Category {
-  id    String @id @default(uuid())
-  title String
-  books Book[]
+  id        String   @id @default(uuid())
+  title     String
+  books     Book[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("categories")
 }
@@ -48,6 +50,8 @@ model Book {
 
   reviewAndRatings ReviewAndRating[]
   orderedBooks     OrderedBook[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 
   @@map("books")
 }
@@ -63,28 +67,21 @@ model ReviewAndRating {
   bookId String
   book   Book   @relation(fields: [bookId], references: [id])
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("reviews_and_ratings")
 }
 
-// model Order {
-//   id String @id @default(uuid())
-
-//   userId String
-//   user   User   @relation(fields: [userId], references: [id])
-
-//   orderedBooks Json[]   
-//   status       String   @default("pending")
-//   createdAt    DateTime @default(now())
-
-//   @@map("orders")
-// }
 model Order {
   id           String        @id @default(uuid())
   userId       String
-  status       String        @default("pending")
-  createdAt    DateTime      @default(now())
+  status       Status        @default(pending)
   user         User          @relation(fields: [userId], references: [id])
   orderedBooks OrderedBook[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("orders")
 }
@@ -99,4 +96,15 @@ model OrderedBook {
   book   Book   @relation(fields: [bookId], references: [id])
 
   @@map("ordered_books")
+}
+
+enum Role {
+  admin
+  customer
+}
+
+enum Status {
+  pending
+  shipped
+  delivered
 }

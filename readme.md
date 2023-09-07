@@ -73,3 +73,9 @@
 **Delete a book → Only Allowed for admins**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/books/:id ( DELETE)
+
+#### Implement Create, Read Operations for Order Listings.
+
+**Create Order → Only Allowed For Customer**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/orders/create-order (POST)
