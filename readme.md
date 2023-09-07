@@ -25,3 +25,9 @@
 **Delete a User → Only Allowed For Admin**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/users/:id ( DELETE)
+
+#### Implement Create, Read, Update, and Delete Operations for Category Listing
+
+**Create Category → Only Allowed For Admin**
+
+- Route: /api/v1/categories/create-category (POST)

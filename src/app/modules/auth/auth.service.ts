@@ -7,7 +7,7 @@ import ApiError from "../../../errors/ApiError";
 import { jwtHelpers } from "../../../helpers/jwtHelpers";
 import prisma from "../../../shared/prisma";
 
-export const createUser = async (userData: User): Promise<User> => {
+const createUser = async (userData: User): Promise<User> => {
   // Check if the email is already registered
   const existingUser = await prisma.user.findUnique({
     where: {
@@ -32,7 +32,7 @@ export const createUser = async (userData: User): Promise<User> => {
   return newUser;
 };
 
-export const loginUser = async (userCredential: {
+const loginUser = async (userCredential: {
   email: string;
   password: string;
 }): Promise<string> => {
