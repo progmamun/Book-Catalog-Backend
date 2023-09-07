@@ -19,6 +19,16 @@ const getAllCategory = async (): Promise<Category[] | null> => {
 };
 
 const getSingleCategory = async (id: string): Promise<Category | null> => {
+  const isExist = await prisma.category.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, "category not found!");
+  }
+
   const result = await prisma.category.findUnique({
     where: { id: id },
     include: {

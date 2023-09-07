@@ -47,3 +47,21 @@
 **Delete a Category → Only Allowed For Admin**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/categories/:id ( DELETE)
+
+#### Implement Create, Read, Update, and Delete Operations for Book listings.
+
+**Create a New Book → Only Allowed For Admin**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/books/create-book (POST)
+
+**Get All Books**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/books (GET)
+
+**Get Books By CategoryId**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/books/:categoryId/category (GET)
+
+**Get a Single Book**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/books/:id (GET)
