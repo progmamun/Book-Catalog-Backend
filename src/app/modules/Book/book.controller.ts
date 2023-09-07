@@ -1,5 +1,6 @@
 import { Book } from "@prisma/client";
 import { Request, RequestHandler, Response } from "express";
+import httpStatus from "http-status";
 import catchAsync from "../../../shared/catchAsync";
 import pick from "../../../shared/pick";
 import sendResponse from "../../../shared/sendResponse";
@@ -14,7 +15,7 @@ const createBook: RequestHandler = catchAsync(
 
     sendResponse<Book>(res, {
       success: true,
-      statusCode: 200,
+      statusCode: httpStatus.CREATED,
       message: "Book created successfully",
       data: result,
     });
@@ -29,7 +30,7 @@ const getAllBook: RequestHandler = catchAsync(
     const result = await BookService.getAllBook(filters, options);
 
     sendResponse<Book[]>(res, {
-      statusCode: 200,
+      statusCode: httpStatus.OK,
       success: true,
       message: "Books fetched successfully",
       meta: result.meta,
@@ -45,7 +46,7 @@ const getBooksByCategory: RequestHandler = catchAsync(
     const result = await BookService.getBooksByCategory(categoryId, options);
 
     sendResponse<Book[]>(res, {
-      statusCode: 200,
+      statusCode: httpStatus.OK,
       success: true,
       message: "Books with associated category data fetched successfully",
       meta: result.meta,
@@ -54,8 +55,22 @@ const getBooksByCategory: RequestHandler = catchAsync(
   }
 );
 
+const getSingleBook: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await BookService.getSingleBook(req.params.id);
+
+    sendResponse<Book>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Book fetched successfully",
+      data: result,
+    });
+  }
+);
+
 export const BookController = {
   createBook,
   getAllBook,
   getBooksByCategory,
+  getSingleBook,
 };
