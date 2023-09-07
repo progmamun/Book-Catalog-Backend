@@ -1,3 +1,6 @@
+import { User } from "@prisma/client";
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import prisma from "../../../shared/prisma";
 
 const getAllUser = async () => {
@@ -34,7 +37,52 @@ const getSingleUser = async (userId: string) => {
   return user;
 };
 
+const updateUser = async (
+  userId: string,
+  userUpdateData: Partial<User>
+): Promise<User> => {
+  const isExistUser = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!isExistUser) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "User not found!");
+  }
+
+  const user = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: userUpdateData,
+  });
+
+  return user;
+};
+
+const deleteUser = async (userId: string) => {
+  const existUser = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+  if (!existUser) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "User does not found. 404");
+  }
+
+  const deleteUser = await prisma.user.delete({
+    where: {
+      id: userId,
+    },
+  });
+
+  return deleteUser;
+};
+
 export const UserService = {
   getAllUser,
   getSingleUser,
+  updateUser,
+  deleteUser,
 };
