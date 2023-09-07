@@ -30,4 +30,12 @@
 
 **Create Category → Only Allowed For Admin**
 
-- Route: /api/v1/categories/create-category (POST)
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/categories/create-category (POST)
+
+**Get All Categories**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/categories (GET)
+
+**Get a Single Category**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/categories/:id (GET)
