@@ -65,3 +65,7 @@
 **Get a Single Book**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/books/:id (GET)
+
+**Update a Single Book → Only Allowed For Admin**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/books/:id (PATCH)
