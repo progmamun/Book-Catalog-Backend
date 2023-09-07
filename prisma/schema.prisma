@@ -12,15 +12,15 @@ datasource db {
 
 model User {
   id               String            @id @default(uuid())
-  fullName         String            @map("full_name")
+  name             String
   email            String            @unique
   password         String
   role             String
-  contactNo        String            @unique @map("contact_number")
+  contactNo        String            @unique
   address          String
-  profileImg       String?           @map("profile_img")
-  createdAt        DateTime          @default(now()) @map("created_at")
-  updatedAt        DateTime          @updatedAt @map("updated_at")
+  profileImg       String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   reviewAndRatings ReviewAndRating[]
   orders           Order[]
 
@@ -41,7 +41,7 @@ model Book {
   author          String
   price           Float
   genre           String
-  publicationDate String @map("publication_date")
+  publicationDate String
 
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
@@ -72,9 +72,9 @@ model ReviewAndRating {
 //   userId String
 //   user   User   @relation(fields: [userId], references: [id])
 
-//   orderedBooks Json[]   @map("ordered_books")
+//   orderedBooks Json[]   
 //   status       String   @default("pending")
-//   createdAt    DateTime @default(now()) @map("created_at")
+//   createdAt    DateTime @default(now())
 
 //   @@map("orders")
 // }
