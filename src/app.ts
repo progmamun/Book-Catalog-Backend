@@ -5,6 +5,7 @@ import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 import routes from "./app/routes";
 
 import cookieParser from "cookie-parser";
+import path from "path";
 
 const app: Application = express();
 
@@ -17,8 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1", routes);
 
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello Book Catalog Server!");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 //global error handler
