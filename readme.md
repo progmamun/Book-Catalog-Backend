@@ -79,3 +79,7 @@
 **Create Order → Only Allowed For Customer**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/orders/create-order (POST)
+
+**Get all Order → Only Allowed For Admins**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/orders (GET)

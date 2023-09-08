@@ -20,6 +20,20 @@ const createOrder: RequestHandler = catchAsync(
   }
 );
 
+const getAllOrder: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await OrderService.getAllOrder();
+
+    sendResponse<Order[]>(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Get All Order successfully",
+      data: result,
+    });
+  }
+);
+
 export const OrderController = {
   createOrder,
+  getAllOrder,
 };
