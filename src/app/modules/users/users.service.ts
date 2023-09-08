@@ -20,6 +20,16 @@ const getAllUser = async () => {
 };
 
 const getSingleUser = async (userId: string) => {
+  const isExistUser = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!isExistUser) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  }
+
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -48,7 +58,7 @@ const updateUser = async (
   });
 
   if (!isExistUser) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "User not found!");
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   }
 
   const user = await prisma.user.update({
