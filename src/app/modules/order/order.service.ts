@@ -37,7 +37,47 @@ const getAllOrder = async (): Promise<Order[] | null> => {
   return result;
 };
 
+const getOrdersByUser = async (id: string): Promise<Order[] | null> => {
+  const order = await prisma.order.findMany({
+    where: { userId: id },
+  });
+  if (!order) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Order not found !");
+  }
+
+  const result = await prisma.order.findMany({
+    where: { userId: id },
+  });
+  return result;
+};
+
+const getOrdersById = async (
+  userId: string,
+  role: string,
+  orderId: string
+): Promise<Order | null> => {
+  let result;
+  if (role === "admin") {
+    result = await prisma.order.findUnique({
+      where: { id: orderId },
+    });
+  } else {
+    result = await prisma.order.findUnique({
+      where: {
+        userId: userId,
+        id: orderId,
+      },
+    });
+  }
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Order not found.");
+  }
+  return result;
+};
+
 export const OrderService = {
   createOrder,
   getAllOrder,
+  getOrdersByUser,
+  getOrdersById,
 };

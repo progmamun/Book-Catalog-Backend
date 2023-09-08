@@ -22,7 +22,13 @@ const createOrder: RequestHandler = catchAsync(
 
 const getAllOrder: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const result = await OrderService.getAllOrder();
+    const { userId } = req.user!;
+    let result;
+    if (req.user?.role === "admin") {
+      result = await OrderService.getAllOrder();
+    } else {
+      result = await OrderService.getOrdersByUser(userId);
+    }
 
     sendResponse<Order[]>(res, {
       success: true,
@@ -33,7 +39,23 @@ const getAllOrder: RequestHandler = catchAsync(
   }
 );
 
+const getOrdersById: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { userId, role } = req.user!;
+    const { orderId } = req.params;
+    const result = await OrderService.getOrdersById(userId, role, orderId);
+
+    sendResponse<Order>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Order fetched successfully",
+      data: result,
+    });
+  }
+);
+
 export const OrderController = {
   createOrder,
   getAllOrder,
+  getOrdersById,
 };

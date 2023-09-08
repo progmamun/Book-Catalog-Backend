@@ -83,3 +83,11 @@
 **Get all Order → Only Allowed For Admins**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/orders (GET)
+
+**Get all Order for specific Customers → Only Specific Customers**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/orders (GET)
+
+**Get single order by Id → Only for specific customer and admins**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/orders/:orderId (Get)
