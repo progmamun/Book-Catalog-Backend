@@ -3,82 +3,54 @@ import httpStatus from "http-status";
 import ApiError from "../../../errors/ApiError";
 import prisma from "../../../shared/prisma";
 
-const getAllUser = async () => {
-  const users = await prisma.user.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      contactNo: true,
-      address: true,
-      profileImg: true,
-    },
+const getAllUser = async (): Promise<any[] | null> => {
+  const allUser = await prisma.user.findMany({});
+  const result = allUser.map(({ password, ...rest }) => {
+    return rest;
   });
 
-  return users;
+  return result;
 };
 
-const getSingleUser = async (userId: string) => {
-  const isExistUser = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  if (!isExistUser) {
-    throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  }
-
+const getSingleUser = async (
+  id: string
+): Promise<Omit<User, "password"> | {}> => {
   const user = await prisma.user.findUnique({
     where: {
-      id: userId,
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      contactNo: true,
-      address: true,
-      profileImg: true,
+      id: id,
     },
   });
-  return user;
+  const { password, ...rest } = user || {};
+  return rest;
 };
 
 const updateUser = async (
-  userId: string,
-  userUpdateData: Partial<User>
-): Promise<User> => {
-  const isExistUser = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
+  id: string,
+  payload: Partial<User>
+): Promise<User | null> => {
+  const isExist = await getSingleUser(id);
 
-  if (!isExistUser) {
-    throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found !");
   }
 
-  const user = await prisma.user.update({
+  const result = await prisma.user.update({
     where: {
-      id: userId,
+      id,
     },
-    data: userUpdateData,
+    data: payload,
   });
-
-  return user;
+  return result;
 };
 
-const deleteUser = async (userId: string) => {
+const deleteUser = async (userId: string): Promise<User | null> => {
   const existUser = await prisma.user.findUnique({
     where: {
       id: userId,
     },
   });
   if (!existUser) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "User does not found. 404");
+    throw new ApiError(httpStatus.NOT_FOUND, "User does not found.");
   }
 
   const deleteUser = await prisma.user.delete({

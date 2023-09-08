@@ -10,7 +10,7 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
   const { password, ...newUserWithoutPassword } = user;
 
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
     message: "User created successfully!",
     data: newUserWithoutPassword,

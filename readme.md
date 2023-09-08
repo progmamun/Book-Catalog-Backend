@@ -91,3 +91,7 @@
 **Get single order by Id → Only for specific customer and admins**
 
 - Route: https://book-catalog-prisma-roan.vercel.app/api/v1/orders/:orderId (Get)
+
+**Get User Profile Data → Only for specific user (customer and admin)**
+
+- Route: https://book-catalog-prisma-roan.vercel.app/api/v1/profile (Get)

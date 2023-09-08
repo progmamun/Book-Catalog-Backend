@@ -27,7 +27,6 @@ const createOrder = async (
 
     return result;
   } catch (error) {
-    console.error("Error creating order:", error);
     throw new ApiError(httpStatus.NOT_FOUND, "failed to create Order !");
   }
 };
@@ -38,13 +37,6 @@ const getAllOrder = async (): Promise<Order[] | null> => {
 };
 
 const getOrdersByUser = async (id: string): Promise<Order[] | null> => {
-  const order = await prisma.order.findMany({
-    where: { userId: id },
-  });
-  if (!order) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Order not found !");
-  }
-
   const result = await prisma.order.findMany({
     where: { userId: id },
   });
@@ -68,9 +60,6 @@ const getOrdersById = async (
         id: orderId,
       },
     });
-  }
-  if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Order not found.");
   }
   return result;
 };
