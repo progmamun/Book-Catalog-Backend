@@ -86,11 +86,11 @@ const deleteBookById: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const result = await BookService.deleteBookById(req.params.id);
 
-    sendResponse<Book>(res, {
+    sendResponse<{}>(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: "Book deleted successfully.",
-      data: result,
+      data: {},
     });
   }
 );

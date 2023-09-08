@@ -52,11 +52,11 @@ const updateCategory = catchAsync(async (req: Request, res: Response) => {
 const deleteCategory = catchAsync(async (req: Request, res: Response) => {
   const result = await CategoryService.deleteCategory(req.params.id);
 
-  sendResponse<Category>(res, {
+  sendResponse<{}>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "categories deleted successfully!",
-    data: result,
+    data: {},
   });
 });
 
